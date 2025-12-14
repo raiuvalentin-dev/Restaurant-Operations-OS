@@ -1,0 +1,26 @@
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/employees/")
+      .then(res => res.json())
+      .then(data => setEmployees(data));
+  }, []);
+
+  return (
+    <div>
+      <h1>Restaurant Ops Dashboard</h1>
+      <ul>
+        {employees.map(emp => (
+          <li key={emp.id}>
+            {emp.name} - {emp.role} - Scor: {emp.score}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
