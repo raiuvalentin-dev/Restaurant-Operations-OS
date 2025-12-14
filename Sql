@@ -1,0 +1,7 @@
+CREATE TABLE employees (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(50) NOT NULL,   -- ex: ospătar, bucătar, manager
+    hire_date DATE NOT NULL,
+    score INT DEFAULT 0          -- punctajul curent
+);
