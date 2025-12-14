@@ -1,0 +1,36 @@
+from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import List
+
+app = FastAPI()
+
+# Model pentru angajat
+class Employee(BaseModel):
+    id: int
+    name: str
+    role: str
+    score: int = 0
+
+# Bază de date simulată
+employees: List[Employee] = []
+
+@app.get("/")
+def read_root():
+    return {"message": "Restaurant Ops API"}
+
+@app.post("/employees/")
+def add_employee(employee: Employee):
+    employees.append(employee)
+    return {"message": "Angajat adăugat", "employee": employee}
+
+@app.get("/employees/")
+def list_employees():
+    return employees
+
+@app.put("/employees/{employee_id}/score")
+def update_score(employee_id: int, score: int):
+    for emp in employees:
+        if emp.id == employee_id:
+            emp.score = score
+            return {"message": "Scor actualizat", "employee": emp}
+    return {"error": "Angajatul nu există"}
